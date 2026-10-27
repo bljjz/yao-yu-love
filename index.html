@@ -1,0 +1,1066 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5ef">
+  <meta name="description" content="姚姚和语语的恋爱纪念日与共同回忆。">
+  <title>姚姚 × 语语 · 我们的日常</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f6f5ef;
+      --paper-deep: #ebece3;
+      --ink: #303b33;
+      --muted: #788078;
+      --sage: #879986;
+      --sage-dark: #647765;
+      --sage-pale: #dce4d9;
+      --rose: #c99b91;
+      --rose-pale: #f0e2dc;
+      --line: rgba(72, 88, 74, .16);
+      --serif: "Iowan Old Style", "Noto Serif SC", "Songti SC", Georgia, serif;
+      --sans: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --content: 1120px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.modal-open { overflow: hidden; }
+    button, input, textarea { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--sage-dark);
+      outline-offset: 4px;
+    }
+    ::selection { color: var(--ink); background: #d8e1d3; }
+
+    .site-header {
+      position: absolute;
+      z-index: 5;
+      inset: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(100% - 64px, 1440px);
+      height: 82px;
+      margin: auto;
+      color: rgba(255,255,255,.92);
+    }
+    .brand {
+      font-family: var(--serif);
+      font-size: 15px;
+      letter-spacing: .08em;
+    }
+    .main-nav { display: flex; gap: 34px; align-items: center; }
+    .main-nav a {
+      position: relative;
+      font-size: 12px;
+      letter-spacing: .08em;
+      opacity: .8;
+      transition: opacity .3s ease, transform .3s ease;
+    }
+    .main-nav a::after {
+      position: absolute;
+      right: 0;
+      bottom: -7px;
+      left: 0;
+      height: 1px;
+      background: currentColor;
+      content: "";
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s ease;
+    }
+    .main-nav a:hover { opacity: 1; transform: translateY(-1px); }
+    .main-nav a:hover::after { transform: scaleX(1); }
+
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: min(900px, 100svh);
+      min-height: max(680px, 100svh);
+      overflow: hidden;
+      place-items: center;
+      isolation: isolate;
+      color: #fff;
+      background:
+        radial-gradient(ellipse at 72% 21%, rgba(223, 188, 171, .29), transparent 32%),
+        radial-gradient(ellipse at 44% 39%, rgba(183, 198, 174, .48), transparent 37%),
+        radial-gradient(ellipse at 18% 82%, rgba(204, 172, 157, .27), transparent 38%),
+        linear-gradient(145deg, #66786a 0%, #879483 49%, #b4a49a 100%);
+    }
+    .hero::before, .hero::after {
+      position: absolute;
+      z-index: -1;
+      width: min(80vw, 880px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 50%;
+      content: "";
+      transform: translateY(var(--parallax, 0px));
+    }
+    .hero::after { width: min(62vw, 660px); border-color: rgba(255,255,255,.1); }
+    .hero-glow {
+      position: absolute;
+      z-index: -1;
+      width: min(58vw, 650px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: rgba(230, 229, 205, .13);
+      filter: blur(80px);
+      transform: translateY(var(--parallax, 0px));
+    }
+    .hero-content {
+      width: min(90%, 760px);
+      padding: 120px 0 70px;
+      text-align: center;
+      animation: hero-arrive 1.2s var(--ease) both;
+    }
+    .eyebrow {
+      margin: 0 0 22px;
+      font-size: 10px;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      opacity: .78;
+    }
+    .hero h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(42px, 8vw, 84px);
+      font-weight: 400;
+      letter-spacing: .09em;
+      line-height: 1.22;
+    }
+    .hero h1 .amp { display: inline-block; padding: 0 .1em; color: #e8dfd1; font-size: .64em; font-style: italic; }
+    .hero-rule { width: 42px; height: 1px; margin: 28px auto 23px; background: #e7c7bb; }
+    .hero-date { margin: 0; font-size: 12px; letter-spacing: .26em; opacity: .82; }
+    .day-count {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 11px;
+      margin: 31px 0 0;
+    }
+    .day-count strong {
+      font-family: var(--serif);
+      font-size: clamp(44px, 7vw, 72px);
+      font-weight: 400;
+      letter-spacing: .02em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .day-count span { font-size: 12px; letter-spacing: .15em; opacity: .84; }
+    .hero-caption { margin: 16px 0 0; font-family: var(--serif); font-size: 14px; letter-spacing: .08em; opacity: .84; }
+    .scroll-cue {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      display: grid;
+      gap: 7px;
+      justify-items: center;
+      color: rgba(255,255,255,.76);
+      font-size: 9px;
+      letter-spacing: .2em;
+      transform: translateX(-50%);
+    }
+    .scroll-cue::after { width: 1px; height: 28px; background: currentColor; content: ""; animation: cue 1.8s ease-in-out infinite; transform-origin: top; }
+
+    .heart-field { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .heart {
+      position: absolute;
+      bottom: -24px;
+      color: rgba(255,255,255,.45);
+      animation: float-up var(--duration, 18s) linear infinite;
+      animation-delay: var(--delay, 0s);
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    .heart svg { display: block; width: var(--size, 12px); height: var(--size, 12px); fill: currentColor; }
+
+    main { overflow: clip; }
+    .section { padding: clamp(88px, 12vw, 150px) 24px; }
+    .section-inner { width: min(100%, var(--content)); margin: 0 auto; }
+    .section-head { margin: 0 auto 62px; text-align: center; }
+    .section-kicker { margin: 0 0 13px; color: var(--sage-dark); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; }
+    .section-title {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(31px, 4vw, 46px);
+      font-weight: 400;
+      letter-spacing: .08em;
+      line-height: 1.4;
+    }
+    .section-note { max-width: 520px; margin: 14px auto 0; color: var(--muted); font-size: 13px; }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .85s var(--ease), transform .85s var(--ease); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    .story { background: var(--paper); }
+    .timeline { position: relative; width: min(100%, 850px); margin: 0 auto; }
+    .timeline::before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: var(--line);
+      content: "";
+    }
+    .timeline-item {
+      position: relative;
+      display: grid;
+      width: 50%;
+      padding: 0 56px 58px 0;
+    }
+    .timeline-item:nth-child(even) { margin-left: 50%; padding: 0 0 58px 56px; }
+    .timeline-dot {
+      position: absolute;
+      top: 18px;
+      right: -5px;
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--paper);
+      border-radius: 50%;
+      background: var(--sage);
+      box-shadow: 0 0 0 1px var(--sage);
+    }
+    .timeline-item:nth-child(even) .timeline-dot { right: auto; left: -5px; }
+    .memory-card {
+      padding: 27px 29px 30px;
+      border: 1px solid rgba(95, 116, 95, .13);
+      border-radius: 3px;
+      background: rgba(255,255,255,.55);
+      box-shadow: 0 8px 26px rgba(48,59,51,.035);
+      transition: transform .35s var(--ease), box-shadow .35s ease, border-color .35s ease;
+    }
+    .memory-card:hover { border-color: rgba(95,116,95,.28); box-shadow: 0 16px 38px rgba(48,59,51,.09); transform: translateY(-5px); }
+    .memory-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .memory-icon { display: grid; width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--sage-pale), var(--rose-pale)); color: #94756b; font-family: var(--serif); font-size: 16px; place-items: center; }
+    .memory-date { color: var(--muted); font-size: 10px; letter-spacing: .13em; }
+    .memory-card h3 { margin: 18px 0 8px; font-family: var(--serif); font-size: 21px; font-weight: 400; letter-spacing: .06em; }
+    .memory-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.9; }
+
+    .gallery-section { background: #eef0e9; }
+    .gallery-grid { display: grid; grid-auto-flow: dense; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .gallery-card {
+      position: relative;
+      display: block;
+      min-height: 235px;
+      overflow: hidden;
+      padding: 0;
+      border: 0;
+      background: #d9e0d6;
+      cursor: zoom-in;
+      text-align: left;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .gallery-card:nth-child(4n + 1), .gallery-card:nth-child(4n + 4) { min-height: 330px; }
+    .gallery-card:hover { z-index: 1; box-shadow: 0 18px 36px rgba(44,55,47,.16); transform: scale(1.015); }
+    .gallery-art, .lightbox-art { position: absolute; inset: 0; overflow: hidden; transition: transform .7s var(--ease); }
+    .gallery-card:hover .gallery-art { transform: scale(1.05); }
+    .gallery-art::before, .lightbox-art::before {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 67% 27%, rgba(255,255,255,.68) 0 2%, transparent 2.5%),
+        radial-gradient(ellipse at 29% 42%, rgba(255,255,255,.38) 0 10%, transparent 10.5%),
+        linear-gradient(150deg, transparent 48%, rgba(255,255,255,.18) 49% 50%, transparent 51%);
+      content: "";
+    }
+    .art-1 { background: linear-gradient(145deg, #c9d4c6, #a9b9aa 48%, #e5dfd1); }
+    .art-2 { background: linear-gradient(155deg, #e6d9cd, #c8b9a7 48%, #d7ddce); }
+    .art-3 { background: linear-gradient(135deg, #c5d3d5, #9fb6b5 48%, #e8e4d8); }
+    .art-4 { background: linear-gradient(155deg, #d6c6bd, #bbaaa0 48%, #e9dfd0); }
+    .art-5 { background: linear-gradient(145deg, #d9dfcd, #b1c0ae 50%, #eadfd1); }
+    .art-6 { background: linear-gradient(145deg, #c8d0d5, #a3afb4 48%, #e5dfd2); }
+    .art-shape {
+      position: absolute;
+      top: 19%;
+      left: 50%;
+      width: 35%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 50%;
+      background: rgba(255,255,255,.13);
+      box-shadow: 0 18px 46px rgba(53,68,57,.1);
+      transform: translateX(-50%);
+    }
+    .art-shape::after {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      width: 155%;
+      height: 42%;
+      border: 1px solid rgba(255,255,255,.44);
+      border-radius: 50% 50% 2px 2px;
+      background: rgba(248,246,236,.31);
+      content: "";
+      transform: translateX(-50%) rotate(-7deg);
+    }
+    .gallery-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+    .gallery-caption {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 55px 20px 18px;
+      color: #fff;
+      background: linear-gradient(transparent, rgba(28,38,31,.46));
+    }
+    .gallery-caption strong { display: block; font-family: var(--serif); font-size: 16px; font-weight: 400; letter-spacing: .08em; }
+    .gallery-caption span { display: block; margin-top: 3px; font-size: 10px; opacity: .8; }
+    .gallery-hint { margin: 21px 0 0; color: var(--muted); text-align: center; font-size: 11px; }
+
+    .anniversary-section { background: var(--paper); }
+    .anniversary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .anniversary-card {
+      position: relative;
+      min-height: 210px;
+      padding: 26px 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.38);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .anniversary-card::before {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #9baa94;
+      box-shadow: 0 0 0 0 rgba(135,153,134,.35);
+      content: "";
+      animation: breathe 2.6s ease-out infinite;
+    }
+    .anniversary-card:hover { box-shadow: 0 14px 30px rgba(48,59,51,.07); transform: translateY(-4px); }
+    .anniversary-label { margin: 0 0 22px; color: var(--muted); font-size: 10px; letter-spacing: .17em; }
+    .anniversary-card h3 { margin: 0; font-family: var(--serif); font-size: 20px; font-weight: 400; }
+    .anniversary-number { display: block; margin-top: 16px; color: var(--sage-dark); font-family: var(--serif); font-size: 30px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+    .anniversary-foot { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; }
+
+    .quote-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 80% 18%, rgba(219, 183, 167, .22), transparent 34%),
+        linear-gradient(135deg, #e8ece4, #f1e9e2);
+      text-align: center;
+    }
+    .quote-section::before, .quote-section::after {
+      position: absolute;
+      top: 50%;
+      width: 280px;
+      height: 280px;
+      border: 1px solid rgba(100,119,101,.12);
+      border-radius: 50%;
+      content: "";
+      transform: translateY(-50%);
+    }
+    .quote-section::before { left: -150px; }
+    .quote-section::after { right: -150px; }
+    .quote-wrap { position: relative; width: min(100%, 760px); margin: 0 auto; }
+    .quote-mark { color: var(--sage); font-family: var(--serif); font-size: 60px; line-height: .8; }
+    .quote-text {
+      min-height: 90px;
+      margin: 18px 0 20px;
+      font-family: var(--serif);
+      font-size: clamp(20px, 3vw, 28px);
+      letter-spacing: .08em;
+      line-height: 1.8;
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    .quote-text.is-changing { opacity: 0; transform: translateY(8px); }
+    .quote-byline { margin: 0; color: var(--muted); font-size: 10px; letter-spacing: .2em; }
+    .quote-controls { display: flex; justify-content: center; gap: 10px; margin-top: 29px; }
+    .icon-button {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border: 1px solid rgba(72,88,74,.24);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      place-items: center;
+      transition: color .3s ease, background .3s ease, border-color .3s ease, transform .3s ease;
+    }
+    .icon-button:hover { border-color: var(--sage-dark); background: var(--sage-dark); color: #fff; transform: scale(1.06); }
+
+    .checklist-section { background: var(--paper); }
+    .checklist { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 40px; width: min(100%, 790px); margin: 0 auto; }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-height: 65px;
+      border-bottom: 1px solid var(--line);
+      color: #9a9e97;
+      cursor: pointer;
+      font-size: 13px;
+      transition: color .3s ease, transform .3s ease;
+    }
+    .check-item:hover { color: var(--ink); transform: translateX(3px); }
+    .check-item input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    .check-mark {
+      display: grid;
+      flex: 0 0 20px;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #c5c9c1;
+      border-radius: 50%;
+      color: transparent;
+      font-size: 12px;
+      transform: scale(1);
+      transition: color .3s ease, background .3s ease, border-color .3s ease, transform .3s ease;
+      place-items: center;
+    }
+    .check-item.is-done { color: var(--sage-dark); }
+    .check-item.is-done .check-mark { border-color: var(--sage); background: var(--sage); color: #fff; animation: check-pop .48s var(--ease); }
+    .check-note { margin: 24px 0 0; color: var(--muted); text-align: center; font-size: 10px; }
+
+    .guestbook-section { background: #eef0e9; }
+    .guestbook-panel { width: min(100%, 660px); margin: 0 auto; padding: clamp(24px, 5vw, 44px); border: 1px solid var(--line); background: rgba(255,255,255,.5); }
+    .guestbook-form { display: grid; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .guestbook-form input, .guestbook-form textarea {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1px solid rgba(72,88,74,.18);
+      border-radius: 0;
+      background: rgba(255,255,255,.64);
+      color: var(--ink);
+      font-size: 12px;
+    }
+    .guestbook-form textarea { min-height: 115px; resize: vertical; }
+    .guestbook-form input:disabled, .guestbook-form textarea:disabled { color: #858b82; cursor: not-allowed; }
+    .guestbook-status { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
+    .guestbook-empty { margin: 23px 0 0; padding: 20px; border-top: 1px solid var(--line); color: var(--muted); text-align: center; font-family: var(--serif); font-size: 14px; }
+    .submit-button {
+      justify-self: center;
+      min-width: 148px;
+      padding: 11px 20px;
+      border: 1px solid var(--sage-dark);
+      background: var(--sage-dark);
+      color: #fff;
+      cursor: not-allowed;
+      font-size: 11px;
+      letter-spacing: .1em;
+      opacity: .62;
+      transition: opacity .3s ease, transform .3s ease;
+    }
+
+    .site-footer { padding: 76px 24px 34px; background: #49594d; color: rgba(255,255,255,.88); text-align: center; }
+    .footer-heart { display: inline-block; color: #d9a99c; font-size: 19px; animation: heartbeat 1.4s ease-in-out infinite; }
+    .footer-quote { margin: 17px 0 23px; font-family: var(--serif); font-size: 18px; letter-spacing: .08em; }
+    .footer-signature { margin: 0; color: rgba(255,255,255,.62); font-size: 10px; letter-spacing: .18em; }
+    .footer-date { margin: 25px 0 0; color: rgba(255,255,255,.46); font-size: 9px; letter-spacing: .14em; }
+
+    .music-player {
+      position: fixed;
+      z-index: 8;
+      right: 22px;
+      bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 6px 15px 6px 7px;
+      border: 1px solid rgba(255,255,255,.52);
+      border-radius: 999px;
+      background: rgba(248,248,243,.88);
+      box-shadow: 0 8px 28px rgba(42,54,45,.13);
+      color: var(--ink);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+    .music-toggle {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: var(--sage-dark);
+      color: #fff;
+      cursor: pointer;
+      transition: transform .3s ease, background .3s ease;
+      place-items: center;
+    }
+    .music-toggle:hover { background: #506451; transform: scale(1.08); }
+    .music-meta { min-width: 85px; }
+    .music-meta strong { display: block; font-size: 10px; font-weight: 500; letter-spacing: .04em; }
+    .music-meta span { display: block; color: var(--muted); font-size: 9px; }
+    .music-toggle:disabled { cursor: not-allowed; opacity: .5; }
+    .music-toggle:disabled:hover { transform: none; }
+
+    .lightbox {
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      display: grid;
+      padding: 24px;
+      background: rgba(24,31,26,.92);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s ease;
+      place-items: center;
+    }
+    .lightbox.is-open { opacity: 1; pointer-events: auto; }
+    .lightbox-stage { position: relative; width: min(100%, 1040px); height: min(78svh, 720px); }
+    .lightbox-image, .lightbox-art { width: 100%; height: 100%; object-fit: contain; }
+    .lightbox-art { position: relative; }
+    .lightbox-caption { margin: 14px 0 0; color: rgba(255,255,255,.82); text-align: center; font-family: var(--serif); font-size: 14px; letter-spacing: .07em; }
+    .lightbox-close, .lightbox-arrow {
+      position: absolute;
+      z-index: 2;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.38);
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      cursor: pointer;
+      transition: background .3s ease, transform .3s ease;
+      place-items: center;
+    }
+    .lightbox-close:hover, .lightbox-arrow:hover { background: rgba(255,255,255,.2); transform: scale(1.06); }
+    .lightbox-close { top: 22px; right: 22px; }
+    .lightbox-arrow { top: 50%; transform: translateY(-50%); }
+    .lightbox-arrow:hover { transform: translateY(-50%) scale(1.06); }
+    .lightbox-prev { left: 22px; }
+    .lightbox-next { right: 22px; }
+    .lightbox-content { width: min(100%, 1040px); }
+    .lightbox-stage .gallery-art { position: absolute; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @keyframes hero-arrive { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes cue { 0%, 100% { transform: scaleY(.65); opacity: .5; } 50% { transform: scaleY(1); opacity: 1; } }
+    @keyframes float-up {
+      0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(0deg); }
+      12% { opacity: .58; }
+      80% { opacity: .5; }
+      100% { opacity: 0; transform: translate3d(var(--drift, 25px), -110vh, 0) rotate(28deg); }
+    }
+    @keyframes breathe { 0% { box-shadow: 0 0 0 0 rgba(135,153,134,.34); } 70% { box-shadow: 0 0 0 10px rgba(135,153,134,0); } 100% { box-shadow: 0 0 0 0 rgba(135,153,134,0); } }
+    @keyframes check-pop { 0% { transform: scale(.65); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.22); } 24% { transform: scale(1); } 36% { transform: scale(1.15); } 48% { transform: scale(1); } }
+
+    @media (max-width: 760px) {
+      .site-header { width: calc(100% - 40px); height: 68px; }
+      .main-nav { gap: 15px; }
+      .main-nav a { font-size: 10px; letter-spacing: .02em; }
+      .main-nav a:nth-child(2) { display: none; }
+      .hero { min-height: 100svh; }
+      .hero-content { padding-top: 100px; }
+      .hero h1 { font-size: clamp(40px, 12vw, 65px); }
+      .section { padding: 84px 20px; }
+      .section-head { margin-bottom: 42px; }
+      .timeline::before { left: 7px; }
+      .timeline-item, .timeline-item:nth-child(even) { width: 100%; margin-left: 0; padding: 0 0 28px 35px; }
+      .timeline-dot, .timeline-item:nth-child(even) .timeline-dot { top: 17px; right: auto; left: 2px; }
+      .memory-card { padding: 23px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 9px; }
+      .gallery-card, .gallery-card:nth-child(4n + 1), .gallery-card:nth-child(4n + 4) { min-height: 210px; }
+      .gallery-card:nth-child(3n) { min-height: 270px; }
+      .gallery-caption { padding: 45px 12px 12px; }
+      .gallery-caption strong { font-size: 14px; }
+      .anniversary-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .anniversary-card { min-height: 185px; padding: 21px 17px; }
+      .checklist { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .music-player { right: 12px; bottom: 12px; }
+      .lightbox { padding: 12px; }
+      .lightbox-stage { height: min(70svh, 620px); }
+      .lightbox-arrow { top: auto; bottom: -58px; }
+      .lightbox-prev { left: calc(50% - 54px); }
+      .lightbox-next { right: calc(50% - 54px); }
+      .lightbox-close { top: 12px; right: 12px; }
+    }
+    @media (max-width: 390px) {
+      .main-nav { gap: 10px; }
+      .main-nav a { font-size: 9px; }
+      .brand { font-size: 13px; }
+      .gallery-card, .gallery-card:nth-child(4n + 1), .gallery-card:nth-child(4n + 4) { min-height: 175px; }
+      .gallery-card:nth-child(3n) { min-height: 225px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="回到首页">Y &amp; Y</a>
+    <nav class="main-nav" aria-label="主导航">
+      <a href="#story">我们的故事</a>
+      <a href="#gallery">回忆相册</a>
+      <a href="#anniversaries">纪念日</a>
+      <a href="#guestbook">留言</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home" aria-labelledby="hero-title">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="heart-field" id="heart-field" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="eyebrow">A LITTLE PLACE FOR US</p>
+      <h1 id="hero-title"><span id="name-one">姚姚</span><span class="amp"> &amp; </span><span id="name-two">语语</span></h1>
+      <div class="hero-rule"></div>
+      <p class="hero-date" id="hero-date"></p>
+      <p class="day-count"><strong id="day-count">—</strong><span id="day-unit">天</span></p>
+      <p class="hero-caption" id="day-caption">把每一个平凡日子，过成喜欢的样子</p>
+    </div>
+    <a class="scroll-cue" href="#story" aria-label="向下浏览">SCROLL</a>
+  </section>
+
+  <main>
+    <section class="section story" id="story">
+      <div class="section-inner">
+        <header class="section-head reveal">
+          <p class="section-kicker">OUR STORY</p>
+          <h2 class="section-title">故事，从我们开始</h2>
+          <p class="section-note">重要的不是走过多少路，而是每一步都愿意并肩。</p>
+        </header>
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </section>
+
+    <section class="section gallery-section" id="gallery">
+      <div class="section-inner">
+        <header class="section-head reveal">
+          <p class="section-kicker">LITTLE MOMENTS</p>
+          <h2 class="section-title">把喜欢的日子收藏起来</h2>
+          <p class="section-note">等照片慢慢填满这里，也等故事慢慢发生。</p>
+        </header>
+        <div class="gallery-grid" id="gallery-grid"></div>
+        <p class="gallery-hint reveal">点击照片可放大 · 左右滑动或使用方向键切换</p>
+      </div>
+    </section>
+
+    <section class="section anniversary-section" id="anniversaries">
+      <div class="section-inner">
+        <header class="section-head reveal">
+          <p class="section-kicker">SAVE THE DATE</p>
+          <h2 class="section-title">值得一起期待的日子</h2>
+          <p class="section-note">日期可在文件顶部配置区填写，倒计时会自动更新。</p>
+        </header>
+        <div class="anniversary-grid" id="anniversary-grid"></div>
+      </div>
+    </section>
+
+    <section class="section quote-section" id="quotes">
+      <div class="section-inner quote-wrap reveal">
+        <p class="section-kicker">A NOTE FOR YOU</p>
+        <div class="quote-mark" aria-hidden="true">“</div>
+        <p class="quote-text" id="quote-text" aria-live="polite"></p>
+        <p class="quote-byline" id="quote-byline"></p>
+        <div class="quote-controls">
+          <button class="icon-button" id="quote-prev" type="button" aria-label="上一句情话">←</button>
+          <button class="icon-button" id="quote-next" type="button" aria-label="下一句情话">→</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section checklist-section" id="checklist">
+      <div class="section-inner">
+        <header class="section-head reveal">
+          <p class="section-kicker">OUR LITTLE PROMISES</p>
+          <h2 class="section-title">想和你一起完成的小事</h2>
+          <p class="section-note">勾选状态保存在这台设备的浏览器中。</p>
+        </header>
+        <div class="checklist reveal" id="checklist-items"></div>
+        <p class="check-note reveal">清单内容和完成状态都能在文件顶部配置区调整。</p>
+      </div>
+    </section>
+
+    <section class="section guestbook-section" id="guestbook">
+      <div class="section-inner">
+        <header class="section-head reveal">
+          <p class="section-kicker">GUESTBOOK</p>
+          <h2 class="section-title">留一句温柔的话</h2>
+          <p class="section-note">欢迎来到这个小小的纪念角落。</p>
+        </header>
+        <div class="guestbook-panel reveal">
+          <form class="guestbook-form" id="guestbook-form">
+            <div class="form-row">
+              <label class="sr-only" for="guest-name">你的昵称</label>
+              <input id="guest-name" type="text" placeholder="你的昵称（可匿名）" disabled>
+              <label class="sr-only" for="guest-note">留言内容</label>
+              <input id="guest-note" type="text" placeholder="写下祝福或留言…" disabled>
+            </div>
+            <button class="submit-button" type="button" disabled>留言提交暂未启用</button>
+            <p class="guestbook-status">当前是纯静态版本，留言提交暂未接入。若要让留言跨访客保存，需要连接第三方表单或数据库服务。</p>
+          </form>
+          <p class="guestbook-empty">愿每一份心意，都被认真收好。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="footer-heart" aria-hidden="true">♥</span>
+    <p class="footer-quote" id="footer-quote"></p>
+    <p class="footer-signature" id="footer-signature"></p>
+    <p class="footer-date" id="footer-date"></p>
+  </footer>
+
+  <aside class="music-player" aria-label="背景音乐播放器">
+    <button class="music-toggle" id="music-toggle" type="button" aria-label="播放背景音乐" disabled>
+      <span id="music-icon" aria-hidden="true">♪</span>
+    </button>
+    <div class="music-meta"><strong>一段轻轻的旋律</strong><span id="music-status">添加音频地址后可播放</span></div>
+    <audio id="background-audio" loop muted preload="none"></audio>
+  </aside>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="回忆相册" aria-hidden="true">
+    <button class="lightbox-close" id="lightbox-close" type="button" aria-label="关闭">×</button>
+    <button class="lightbox-arrow lightbox-prev" id="lightbox-prev" type="button" aria-label="上一张">←</button>
+    <div class="lightbox-content">
+      <div class="lightbox-stage" id="lightbox-stage"></div>
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+    </div>
+    <button class="lightbox-arrow lightbox-next" id="lightbox-next" type="button" aria-label="下一张">→</button>
+  </div>
+
+  <script>
+    /*
+      ==========================
+      方便修改：请从这里开始编辑
+      ==========================
+      图片可填本地相对路径（如 images/first-date.jpg）或公开图片 URL。
+      音乐可填你有权使用的公开音频地址；留空时播放器会保持禁用。
+    */
+    const CONFIG = {
+      names: { one: "姚姚", two: "语语" },
+      startDate: "2026-11-01",
+      footerLine: "愿每个普通日子，都有被认真记住的理由。",
+      audioUrl: "",
+      memories: [
+        { date: "2026-11-01", icon: "✦", title: "故事从这里开始", detail: "把你们真正的相遇、告白或恋爱起始故事写在这里。以后每次回看，都是新的心动。" },
+        { date: "留给未来", icon: "○", title: "第一次一起出发", detail: "目的地不必很远，只要一路上有分享不完的话，就已经是很好的旅行。" },
+        { date: "留给未来", icon: "♡", title: "还有很多个以后", detail: "把那些想一起完成的小事，慢慢变成属于你们的日常。" }
+      ],
+      gallery: [
+        { title: "初见的那一天", note: "把你们的第一张合照放在这里", image: "", art: "art-1" },
+        { title: "一起散步", note: "某个刚刚好的傍晚", image: "", art: "art-2" },
+        { title: "分享一顿饭", note: "认真生活的小小证据", image: "", art: "art-3" },
+        { title: "出发去看世界", note: "下一站，也想和你一起", image: "", art: "art-4" },
+        { title: "普通但闪亮", note: "那些不需要理由的开心", image: "", art: "art-5" },
+        { title: "此刻与以后", note: "相册还会继续长大", image: "", art: "art-6" }
+      ],
+      anniversaries: [
+        { title: "恋爱纪念日", label: "OUR DAY", date: "2026-11-01", yearly: true },
+        { title: "第一次相遇", label: "FIRST HELLO", date: "", yearly: false },
+        { title: "第一次约会", label: "FIRST DATE", date: "", yearly: false },
+        { title: "第一次旅行", label: "FIRST TRIP", date: "", yearly: false }
+      ],
+      quotes: [
+        "最好的浪漫，是每个普通的日子里，都有你。 ",
+        "不必赶路，我们可以慢慢把生活过成喜欢的样子。",
+        "如果日常有形状，那一定是我们并肩的模样。",
+        "想把很多很多个明天，都留给一起醒来的我们。"
+      ],
+      checklist: [
+        "一起看一次日落",
+        "做一顿只属于我们的晚餐",
+        "去一个都没去过的地方",
+        "在雨天分享一把伞",
+        "拍一张认真对视的合照",
+        "给未来的彼此写一封信"
+      ]
+    };
+
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+    const localDate = (value) => {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(value || "")) return null;
+      const [year, month, day] = value.split("-").map(Number);
+      const date = new Date(year, month - 1, day);
+      return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day ? date : null;
+    };
+    const dayStart = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const dayDistance = (from, to) => Math.round((dayStart(to) - dayStart(from)) / 86400000);
+    const formatDate = (date) => date ? new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "long", day: "numeric" }).format(date) : "日期待填写";
+
+    function renderHero() {
+      $("#name-one").textContent = CONFIG.names.one;
+      $("#name-two").textContent = CONFIG.names.two;
+      document.title = `${CONFIG.names.one} × ${CONFIG.names.two} · 我们的日常`;
+      const start = localDate(CONFIG.startDate);
+      $("#hero-date").textContent = start ? `从 ${formatDate(start)} 开始` : "我们的故事";
+      const field = $("#heart-field");
+      for (let i = 0; i < 18; i++) {
+        const heart = document.createElement("span");
+        heart.className = "heart";
+        heart.style.left = `${(i * 37 + 8) % 100}%`;
+        heart.style.setProperty("--size", `${8 + (i % 4) * 4}px`);
+        heart.style.setProperty("--duration", `${16 + (i % 7) * 2}s`);
+        heart.style.setProperty("--delay", `${-((i * 3) % 22)}s`);
+        heart.style.setProperty("--drift", `${(i % 2 ? 1 : -1) * (18 + (i % 5) * 8)}px`);
+        heart.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 21s-8.2-5.3-10.2-10.2C.1 6.4 2.4 2.5 6.4 2.5c2.4 0 4.2 1.5 5.6 3.2 1.4-1.7 3.2-3.2 5.6-3.2 4 0 6.3 3.9 4.6 8.3C20.2 15.7 12 21 12 21z"/></svg>';
+        field.append(heart);
+      }
+      updateLoveClock();
+      window.setInterval(updateLoveClock, 1000);
+    }
+
+    function updateLoveClock() {
+      const start = localDate(CONFIG.startDate);
+      if (!start) {
+        $("#day-count").textContent = "—";
+        $("#day-caption").textContent = "请在文件顶部填写恋爱开始日期";
+        return;
+      }
+      const now = new Date();
+      if (dayStart(now) < dayStart(start)) {
+        const days = dayDistance(now, start);
+        $("#day-count").textContent = String(days);
+        $("#day-unit").textContent = days === 1 ? "天" : "天";
+        $("#day-caption").textContent = "距离故事正式开始，还有一点点期待";
+        return;
+      }
+      const elapsed = Math.max(0, now.getTime() - start.getTime());
+      const days = Math.floor(elapsed / 86400000) + 1;
+      $("#day-count").textContent = days.toLocaleString("zh-CN");
+      $("#day-unit").textContent = "天";
+      $("#day-caption").textContent = `在一起的第 ${days.toLocaleString("zh-CN")} 天 · 愿每一天都值得记住`;
+    }
+
+    function renderTimeline() {
+      $("#timeline").innerHTML = CONFIG.memories.map((item, index) => {
+        const date = localDate(item.date);
+        return `<article class="timeline-item reveal" style="transition-delay:${Math.min(index * 100, 300)}ms">
+          <span class="timeline-dot" aria-hidden="true"></span>
+          <div class="memory-card">
+            <div class="memory-top"><span class="memory-icon" aria-hidden="true">${escapeHtml(item.icon)}</span><time class="memory-date">${escapeHtml(date ? formatDate(date) : item.date)}</time></div>
+            <h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.detail)}</p>
+          </div>
+        </article>`;
+      }).join("");
+    }
+
+    function artMarkup(art) {
+      return `<div class="gallery-art ${escapeHtml(art || "art-1")}" aria-hidden="true"><span class="art-shape"></span></div>`;
+    }
+
+    function renderGallery() {
+      $("#gallery-grid").innerHTML = CONFIG.gallery.map((item, index) => {
+        const visual = item.image
+          ? `<img class="gallery-image" src="${escapeAttr(item.image)}" alt="${escapeAttr(item.title)}" loading="lazy">`
+          : artMarkup(item.art);
+        return `<button class="gallery-card reveal" type="button" data-gallery-index="${index}" aria-label="放大查看：${escapeAttr(item.title)}" style="transition-delay:${(index % 3) * 80}ms">
+          ${visual}<span class="gallery-caption"><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.note)}</span></span>
+        </button>`;
+      }).join("");
+      $$(".gallery-card").forEach((button) => button.addEventListener("click", () => openLightbox(Number(button.dataset.galleryIndex))));
+    }
+
+    function nextYearlyDate(value, now = new Date()) {
+      const base = localDate(value);
+      if (!base) return null;
+      const today = dayStart(now);
+      let candidate = new Date(today.getFullYear(), base.getMonth(), base.getDate());
+      if (candidate < today) candidate = new Date(today.getFullYear() + 1, base.getMonth(), base.getDate());
+      return candidate;
+    }
+
+    function renderAnniversaries() {
+      const today = dayStart(new Date());
+      $("#anniversary-grid").innerHTML = CONFIG.anniversaries.map((item) => {
+        const date = localDate(item.date);
+        let value = "待填写";
+        let foot = "在配置区添加日期";
+        if (date && item.yearly) {
+          const next = nextYearlyDate(item.date);
+          const days = dayDistance(today, next);
+          value = days === 0 ? "就是今天" : `${days} 天`;
+          foot = days === 0 ? "今天，好好庆祝" : `距离下一次纪念日`;
+        } else if (date) {
+          const days = dayDistance(date, today);
+          value = days >= 0 ? `${days} 天` : `${Math.abs(days)} 天`;
+          foot = days >= 0 ? "已经一起走过" : "还有";
+        }
+        return `<article class="anniversary-card reveal">
+          <p class="anniversary-label">${escapeHtml(item.label)}</p>
+          <h3>${escapeHtml(item.title)}</h3>
+          <strong class="anniversary-number">${value}</strong>
+          <span class="anniversary-foot">${foot}</span>
+        </article>`;
+      }).join("");
+    }
+
+    let quoteIndex = 0;
+    function setQuote(index) {
+      const text = $("#quote-text");
+      text.classList.add("is-changing");
+      window.setTimeout(() => {
+        quoteIndex = (index + CONFIG.quotes.length) % CONFIG.quotes.length;
+        text.textContent = CONFIG.quotes[quoteIndex];
+        $("#quote-byline").textContent = `— ${CONFIG.names.one} & ${CONFIG.names.two}`;
+        text.classList.remove("is-changing");
+      }, 240);
+    }
+
+    function renderChecklist() {
+      const key = `love-site-checks:${CONFIG.names.one}:${CONFIG.names.two}`;
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(key) || "{}"); } catch { saved = {}; }
+      $("#checklist-items").innerHTML = CONFIG.checklist.map((task, index) => `
+        <label class="check-item ${saved[index] ? "is-done" : ""}">
+          <input type="checkbox" data-check-index="${index}" ${saved[index] ? "checked" : ""}>
+          <span class="check-mark" aria-hidden="true">✓</span><span>${escapeHtml(task)}</span>
+        </label>`).join("");
+      $$("#checklist-items input").forEach((input) => input.addEventListener("change", () => {
+        const state = {};
+        $$("#checklist-items input").forEach((item) => {
+          const done = item.checked;
+          item.closest(".check-item").classList.toggle("is-done", done);
+          if (done) state[item.dataset.checkIndex] = true;
+        });
+        try { localStorage.setItem(key, JSON.stringify(state)); } catch { /* Storage may be disabled by the browser. */ }
+      }));
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+    }
+    function escapeAttr(value) { return escapeHtml(value).replace(/`/g, "&#96;"); }
+
+    let activeGalleryIndex = 0;
+    function openLightbox(index) {
+      activeGalleryIndex = index;
+      updateLightbox();
+      const box = $("#lightbox");
+      box.classList.add("is-open");
+      box.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      $("#lightbox-close").focus();
+    }
+    function closeLightbox() {
+      const box = $("#lightbox");
+      box.classList.remove("is-open");
+      box.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+    }
+    function updateLightbox() {
+      const item = CONFIG.gallery[activeGalleryIndex];
+      const stage = $("#lightbox-stage");
+      stage.innerHTML = item.image
+        ? `<img class="lightbox-image" src="${escapeAttr(item.image)}" alt="${escapeAttr(item.title)}">`
+        : artMarkup(item.art);
+      $("#lightbox-caption").textContent = `${item.title} · ${item.note}`;
+    }
+    function changeLightbox(direction) {
+      activeGalleryIndex = (activeGalleryIndex + direction + CONFIG.gallery.length) % CONFIG.gallery.length;
+      updateLightbox();
+    }
+
+    function setupMusic() {
+      const audio = $("#background-audio");
+      const button = $("#music-toggle");
+      if (!CONFIG.audioUrl) return;
+      audio.src = CONFIG.audioUrl;
+      button.disabled = false;
+      $("#music-status").textContent = "点击开启声音";
+      audio.muted = true;
+      audio.play().then(() => { $("#music-icon").textContent = "Ⅱ"; }).catch(() => {
+        $("#music-status").textContent = "点击播放";
+      });
+      button.addEventListener("click", async () => {
+        if (audio.paused) {
+          try { await audio.play(); } catch { $("#music-status").textContent = "暂时无法播放，请检查音频地址"; return; }
+        }
+        audio.muted = false;
+        $("#music-icon").textContent = audio.paused ? "♪" : "Ⅱ";
+        $("#music-status").textContent = audio.paused ? "已暂停" : "正在播放";
+      });
+      audio.addEventListener("ended", () => { $("#music-icon").textContent = "♪"; });
+    }
+
+    function setupScrollEffects() {
+      const revealItems = $$(".reveal");
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries, currentObserver) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              currentObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: .12, rootMargin: "0px 0px -35px 0px" });
+        revealItems.forEach((item) => observer.observe(item));
+      } else {
+        revealItems.forEach((item) => item.classList.add("is-visible"));
+      }
+      let scheduled = false;
+      window.addEventListener("scroll", () => {
+        if (scheduled) return;
+        scheduled = true;
+        window.requestAnimationFrame(() => {
+          const offset = Math.min(window.scrollY * .12, 100);
+          $(".hero").style.setProperty("--parallax", `${offset}px`);
+          scheduled = false;
+        });
+      }, { passive: true });
+    }
+
+    function setupInteractions() {
+      $("#quote-prev").addEventListener("click", () => setQuote(quoteIndex - 1));
+      $("#quote-next").addEventListener("click", () => setQuote(quoteIndex + 1));
+      $("#lightbox-close").addEventListener("click", closeLightbox);
+      $("#lightbox-prev").addEventListener("click", () => changeLightbox(-1));
+      $("#lightbox-next").addEventListener("click", () => changeLightbox(1));
+      $("#lightbox").addEventListener("click", (event) => {
+        if (event.target === $("#lightbox")) closeLightbox();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (!$("#lightbox").classList.contains("is-open")) return;
+        if (event.key === "Escape") closeLightbox();
+        if (event.key === "ArrowLeft") changeLightbox(-1);
+        if (event.key === "ArrowRight") changeLightbox(1);
+      });
+      let touchStartX = 0;
+      $("#lightbox-stage").addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
+      $("#lightbox-stage").addEventListener("touchend", (event) => {
+        const distance = event.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(distance) > 45) changeLightbox(distance < 0 ? 1 : -1);
+      }, { passive: true });
+      const quoteDelay = 7000;
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        window.setInterval(() => setQuote(quoteIndex + 1), quoteDelay);
+      }
+    }
+
+    function init() {
+      renderHero();
+      renderTimeline();
+      renderGallery();
+      renderAnniversaries();
+      setQuote(0);
+      renderChecklist();
+      $("#footer-quote").textContent = CONFIG.footerLine;
+      $("#footer-signature").textContent = `${CONFIG.names.one} × ${CONFIG.names.two} · 一起慢慢走`;
+      $("#footer-date").textContent = `EST. ${CONFIG.startDate.replaceAll("-", ".")} · MADE WITH LOVE`;
+      setupMusic();
+      setupInteractions();
+      setupScrollEffects();
+    }
+    init();
+  </script>
+</body>
+</html>
